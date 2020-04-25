@@ -1,8 +1,7 @@
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.Test;
 
 public class BasicAuth {
     WebDriver driver;
@@ -13,6 +12,7 @@ public class BasicAuth {
         driver.get("http://the-internet.herokuapp.com/basic_auth/");
     }
 
+    @Test
     public void correctCredentials(){
         setup();
         String username = "admin";
@@ -27,6 +27,7 @@ public class BasicAuth {
         quit();
     }
 
+    @Test
     public void wrongCredentials(){
         setup();
         String username = "wrongUsername";

@@ -1,6 +1,8 @@
 import org.openqa.selenium.*;
 import org.testng.Assert;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.Test;
+
 
 public class AddRemoveElement {
 
@@ -12,31 +14,26 @@ public class AddRemoveElement {
         driver.get("http://the-internet.herokuapp.com/add_remove_elements/");
     }
 
+    @Test
     public void addButton(){
         setup();
         WebElement addButton = driver.findElement(By.cssSelector("button"));
         addButton.click();
-        try {
-            driver.findElement(By.cssSelector("button"));
-            System.out.println("Button was added");
-        } catch (NoSuchElementException buttonDisappeared){
-            System.out.println("Button was not added");
-        }
+
+        Assert.assertTrue(driver.findElement(By.cssSelector("button.added-manually")).isDisplayed());
         quit();
     }
 
+    @Test
     public void deleteButton(){
         setup();
-        addButton();
+        WebElement addButton = driver.findElement(By.cssSelector("button"));
+        addButton.click();
+
         WebElement deleteButton = driver.findElement(By.cssSelector("button.added-manually"));
         deleteButton.click();
 
-        try {
-            driver.findElement(By.cssSelector("button.added-manually"));
-            System.out.println("Button was not deleted");
-        } catch (NoSuchElementException buttonDisappeared){
-            System.out.println("Button was deleted");
-        }
+        Assert.assertFalse(driver.findElements(By.cssSelector("button.added-manually")).size() > 0);
         quit();
     }
 

@@ -6,6 +6,10 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
+import org.testng.annotations.Test;
+
 import java.util.List;
 
 public class BrokenImages {
@@ -18,8 +22,12 @@ public class BrokenImages {
         System.setProperty("webdriver.chrome.driver", "\\Users\\BOB\\Downloads\\qa_software\\chromedriver.exe");
         driver.get("http://the-internet.herokuapp.com/broken_images");
     }
+
+    @Test
     public void checkForBrokenImages(){
         setup();
+        SoftAssert softAssert = new SoftAssert();
+
         try {
             brokenImageCount = 0;
             List<WebElement> imageList = driver.findElements(By.tagName("img"));
@@ -33,6 +41,9 @@ public class BrokenImages {
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
+
+        Assert.assertTrue(brokenImageCount == 0, "brokenImageCount: " + brokenImageCount);
+        System.out.println("Broken image count: " + brokenImageCount);
         quit();
     }
 
@@ -45,7 +56,6 @@ public class BrokenImages {
             if (response.getStatusLine().getStatusCode() != 200){
                 //System.out.println("Status code broken = " + response.getStatusLine().getStatusCode());
                 brokenImageCount++;
-                //System.out.println("Broken image count: " + brokenImageCount);
             }
         }
         catch (Exception e){

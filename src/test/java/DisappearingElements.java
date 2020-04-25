@@ -4,6 +4,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import java.util.List;
 
@@ -14,8 +16,10 @@ public class DisappearingElements {
     int buttonCount2 = 0;
     List<WebElement> listOne;
     List<WebElement> listTwo;
+    List<WebElement> tempList;
     String locator = "ul > li";
     int testIterations = 5;
+    Boolean brokenElements = false;
 
     public void setup(){
         driver = new ChromeDriver();
@@ -24,16 +28,21 @@ public class DisappearingElements {
     }
 
     public void compareLists(){
-        if(buttonCount > buttonCount2)
+        if(buttonCount > buttonCount2) {
             System.out.println("Disappearance!");
+            brokenElements = true;
+        }
         else if(buttonCount < buttonCount2)
+        {
             System.out.println("Reappearance!");
+            brokenElements = true;
+        }
         else
             System.out.println("Nothing happened here!");
     }
 
+    @Test
     public void checkLists(){
-        setup();
         //listOne is empty when first loading the page
         if(buttonCount == 0){
             //Load first list
@@ -50,6 +59,8 @@ public class DisappearingElements {
             compareLists();
             System.out.println("else");
         }
+
+        Assert.assertTrue(brokenElements == false);
         quit();
     }
 
@@ -72,14 +83,22 @@ public class DisappearingElements {
     public void reset(){
         buttonCount = buttonCount2;
         buttonCount2 = 0;
+
+        tempList = listTwo;
+
         listTwo.removeAll(listTwo);
         listOne.removeAll(listOne);
+
+        listOne = tempList;
+
+        tempList.removeAll(tempList);
     }
 
     public void repeatTest(){
         while(testIterations > 1)
         {
             reset();
+            refreshPage();
             waitAMinute();
             checkLists();
             testIterations--;

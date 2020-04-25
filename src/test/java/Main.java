@@ -4,12 +4,14 @@ public class Main {
     public static void main(String[] args){
         System.setProperty("webdriver.chrome.driver", "\\Users\\BOB\\Downloads\\qa_software\\chromedriver.exe");
 
-        /*DisappearingElements disappearingElements = new DisappearingElements();
+       /* DisappearingElements disappearingElements = new DisappearingElements();
+        disappearingElements.setup();
         disappearingElements.checkLists();
-        //disappearingElements.repeatTest();
+        disappearingElements.repeatTest();*/
 
         Digest_Auth digest_auth = new Digest_Auth();
-        digest_auth.sendCredentials();
+        digest_auth.sendCorrectCredentials();
+        digest_auth.sendWrongCredentials();
 
         ContextMenu contextMenu = new ContextMenu();
         contextMenu.contextMenu();
@@ -18,16 +20,12 @@ public class Main {
         checkboxes.firstCheckBox();
         checkboxes.secondCheckBox();
 
-        ChallengingDom cDom = new ChallengingDom();
-        cDom.selectFirstRow();
-
         AddRemoveElement addRemoveElement = new AddRemoveElement();
         addRemoveElement.addButton();
-        System.out.println("Add Element Test - DONE");*/
+        System.out.println("Add Element Test - DONE");
 
-        AddRemoveElement addRemoveElement = new AddRemoveElement();
         addRemoveElement.deleteButton();
-        System.out.println("Remove Element Test - DONE");/*
+        System.out.println("Remove Element Test - DONE");
 
         BasicAuth basicAuth = new BasicAuth();
         basicAuth.correctCredentials();
@@ -36,6 +34,6 @@ public class Main {
 
         BrokenImages brokenImages = new BrokenImages();
         brokenImages.checkForBrokenImages();
-        System.out.println("Broken Image Test - DONE");*/
+        System.out.println("Broken Image Test - DONE");
     }
 }

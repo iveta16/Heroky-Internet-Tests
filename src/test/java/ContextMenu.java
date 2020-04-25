@@ -1,8 +1,11 @@
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 public class ContextMenu {
 
@@ -14,14 +17,20 @@ public class ContextMenu {
         driver.get("http://the-internet.herokuapp.com/context_menu");
     }
 
+    @Test
     public void contextMenu(){
         setup();
         WebElement contextMenuElement = driver.findElement(By.id("hot-spot"));
         Actions action = new Actions(driver);
         action.contextClick(contextMenuElement).perform();
 
-        driver.switchTo().alert().dismiss();
-        driver.switchTo().alert().accept();
+        Alert alert = driver.switchTo().alert();
+        String actualAlertText = alert.getText();
+        String expectedAlertText = "You selected a context menu";
+
+        Assert.assertEquals(actualAlertText, expectedAlertText);
+        alert.dismiss();
+
         quit();
     }
 
